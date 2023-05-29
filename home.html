@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Number</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/png" href="/icon.png">
+
+    <style>
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+          }
+        body {
+            background-color: #03001c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 25px;
+            border: 2px solid #211d47;
+            width: 80%;
+            height: 45%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #1b1740;
+            gap: 10px;
+          }
+        h2 {
+            color: white;
+          }
+        p {
+            color: white;
+            align-items: center;
+          }
+        
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            color: white;
+            gap: 10px;
+          }
+        .submit-btn-create {
+            padding: 10px 20px; /* add more padding to the left and right of the button */
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            background-color: #3a9e3d;
+            color: #fff;
+          }
+        .submit-btn-create:hover {
+            background-color: #70ca73;
+            transform: scale(1.1);
+            transition: 0.2s ease;
+          }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch(function(error) {
+              console.error('Service Worker registration failed:', error);
+            });
+        }
+      </script>
+      
+</head>
+<body>
+    <div class="main-container">
+        <h2>Welcome to Guess the Number!</h2>
+        <p id="message"></p>
+        <form>
+            <div class="form-field">
+                <input type="number" id="guess" name="guess" placeholder="Enter your guess" style="width: 300px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; " required>
+                <button id="submit" class="submit-btn-create">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const secretNumber = Math.floor(Math.random() * 100) + 1;
+            let attempts = 0;
+        
+            const message = document.getElementById('message');
+            const guessInput = document.getElementById('guess');
+            const submitButton = document.getElementById('submit');
+        
+            submitButton.addEventListener('click', (event) => {
+                event.preventDefault();
+        
+                const guess = parseInt(guessInput.value);
+                attempts++;
+        
+                if (guess < secretNumber) {
+                    message.textContent = 'Too low!';
+                } else if (guess > secretNumber) {
+                    message.textContent = 'Too high!';
+                } else {
+                    message.textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
+                    resetGame();
+                }
+        
+                if (attempts === 10) {
+                    message.textContent = `Sorry, you've reached the maximum number of attempts. The secret number was ${secretNumber}.`;
+                    resetGame();
+                }
+            });
+        
+            function resetGame() {
+                guessInput.value = '';
+                submitButton.disabled = true;
+                guessInput.disabled = true;
+            }
+        });
+        
+    </script>
+</body>
+</html>
+
+
+     
+        
+         
