@@ -3,9 +3,6 @@ self.addEventListener('install', function(event) {
       caches.open('guess-the-number').then(function(cache) {
         return cache.addAll([
           '/',
-          '/index.html',
-          '/style.css',
-          '/script.js',
           '/icon.png'
         ]);
       })
